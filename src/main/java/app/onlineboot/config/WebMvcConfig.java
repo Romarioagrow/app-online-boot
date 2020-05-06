@@ -13,6 +13,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
     @Bean
     public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerCustomizer() {
         return container -> container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
@@ -20,13 +21,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/**").setViewName("index");
+        registry.addViewController("/").setViewName("index"); /// /** does not return dist files
     }
 
     @Bean
     public ClassLoaderTemplateResolver indexHTMLTemplateResolver() {
         ClassLoaderTemplateResolver indexHTMLTemplateResolver = new ClassLoaderTemplateResolver();
-        indexHTMLTemplateResolver.setPrefix("frontend/");
+        indexHTMLTemplateResolver.setPrefix("webapp/");
         indexHTMLTemplateResolver.setSuffix(".html");
         indexHTMLTemplateResolver.setTemplateMode(TemplateMode.HTML);
         indexHTMLTemplateResolver.setCharacterEncoding("UTF-8");
